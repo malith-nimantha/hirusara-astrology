@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Consultation | Hirusara Astrology & Consultancy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html#home" class="brand">
+      <span class="logo">☀</span>
+      <span><strong>HIRUSARA</strong><small>Astrology & Consultancy</small></span>
+    </a>
+    <div class="brand-separator" aria-hidden="true"></div>
+    <div class="header-contact" aria-label="Contact details">
+      <a href="tel:+447493157312">+44 7493 157312</a>
+      <a href="mailto:hirusara.astro@gmail.com">hirusara.astro@gmail.com</a>
+      <a class="social-link" href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+      <a class="social-link" href="https://www.instagram.com/hirusara.astro/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+    </nav>
+    <div class="header-actions">
+      <a class="mini-cta" href="booking.html">Book Now</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section booking-page">
+      <div class="booking-card">
+        <div class="section-heading">
+          <p class="eyebrow">Start Your Consultation</p>
+          <h1>Unlock Your Future</h1>
+          <p class="section-note">Select your service, enter your details and confirm payment. Your request will be emailed to Hirusara Astrology & Consultancy.</p>
+        </div>
+
+        <form id="bookingForm" action="https://formsubmit.co/hirusara.astro@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Hirusara Astrology Booking Request">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="Selected service summary" id="selectedServiceSummary" value="">
+
+          <label for="service">Which service would you like?</label>
+          <select id="service" name="Service" required></select>
+
+          <div class="selected-service" id="selectedServiceBox"></div>
+
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="Full name" placeholder="Your full name" required />
+
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="Email address" placeholder="you@example.com" required />
+
+          <label>Birth Time</label>
+          <div class="time-picker" aria-label="Birth time">
+            <input type="number" id="birthHour" name="Birth hour" min="1" max="12" inputmode="numeric" placeholder="HH" required />
+            <span>:</span>
+            <input type="number" id="birthMinute" name="Birth minute" min="0" max="59" inputmode="numeric" placeholder="MM" required />
+            <select id="birthPeriod" name="AM or PM" required>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+          <input type="hidden" id="birthTimeSummary" name="Birth time" />
+
+          <label for="note">Any question or message for the astrologer?</label>
+          <textarea id="note" name="Message / question" rows="5" placeholder="Type your message here..."></textarea>
+
+          <div class="bank-box">
+            <h3>Bank Details</h3>
+            <p>Please deposit the correct service fee and use your full name as the payment reference.</p>
+            <ul>
+              <li><strong>Bank Name:</strong> Add bank name here</li>
+              <li><strong>Account Name:</strong> Hirusara Astrology & Consultancy</li>
+              <li><strong>Account Number:</strong> Add account number here</li>
+              <li><strong>Sort Code / Branch:</strong> Add sort code or branch here</li>
+            </ul>
+          </div>
+
+          <button type="submit" class="btn btn-primary full">I Have Paid</button>
+          <p class="tiny-note">Note: on the first FormSubmit submission, the email owner may need to confirm activation from their inbox.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Hirusara Astrology & Consultancy • <a href="tel:+447493157312">+44 7493 157312</a> • <a href="mailto:hirusara.astro@gmail.com">hirusara.astro@gmail.com</a></p>
+    <div class="footer-socials">
+      <a class="social-link" href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+      <a class="social-link" href="https://www.instagram.com/hirusara.astro/" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
