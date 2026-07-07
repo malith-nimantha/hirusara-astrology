@@ -108,19 +108,27 @@ function initMobileNav(){
    const lang=document.createElement('button');
    lang.className='lang-toggle';
    lang.type='button';
-   lang.textContent=localStorage.getItem('hirusaraLang')==='si'?'EN':'සිංහල';
+   lang.textContent='සිංහල';
+   lang.dataset.lang='en';
    nav.insertBefore(lang, nav.querySelector('.country')||nav.querySelector('.book-small')||null);
-   lang.addEventListener('click',()=>{localStorage.setItem('hirusaraLang',localStorage.getItem('hirusaraLang')==='si'?'en':'si'); location.reload();});
+   lang.addEventListener('click',()=>{
+     if(lang.dataset.lang==='en'){
+       applySinhalaTranslation();
+       lang.dataset.lang='si';
+       lang.textContent='EN';
+     } else {
+       location.reload();
+     }
+   });
  }
  if(!nav.querySelector('.mobile-panel')){
    const countryLinks = currency==='lkr'
-     ? `<a href="sl.html"><img class="flag" src="assets/international-flag.png"><span>Sri Lanka</span></a><a href="uk.html"><img class="flag" src="assets/uk-flag.png"><span>United Kingdom</span></a><a href="international.html"><img class="flag" src="assets/international-flag.png"><span>International</span></a>`
-     : `<a href="uk.html"><img class="flag" src="assets/uk-flag.png"><span>United Kingdom</span></a><a href="international.html"><img class="flag" src="assets/international-flag.png"><span>International</span></a>`;
+     ? ''
+     : `<div class="mobile-title">Region</div><a href="uk.html"><img class="flag" src="assets/uk-flag.png"><span>United Kingdom</span></a><a href="international.html"><img class="flag" src="assets/international-flag.png"><span>International</span></a>`;
    const panel=document.createElement('div');
    panel.className='mobile-panel';
    panel.innerHTML=`
      <div class="mobile-list">
-       <div class="mobile-title">Region</div>
        ${countryLinks}
        <div class="mobile-title">Social Media</div>
        <a href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank"><span class="mobile-social-icon">f</span><span>Facebook</span></a>
@@ -134,19 +142,29 @@ function initMobileNav(){
    fab.className='mobile-book-float';
    fab.href=bookHref;
    fab.setAttribute('aria-label','Book now');
-   fab.innerHTML='✦<span>Book Now</span>';
+   fab.innerHTML='<img src="assets/book-now-mobile.png" alt="Book Now">';
    document.body.appendChild(fab);
  }
 }
 const siMap={
  'HOME':'මුල් පිටුව','ABOUT':'අපි ගැන','SERVICES':'සේවාවන්','BOOK NOW':'වෙන්කරන්න','Unlock Your Future':'ඔබේ අනාගතය විවෘත කරන්න','View Services':'සේවාවන් බලන්න','Ancient wisdom • Modern guidance':'පුරාණ දැනුම • නව මගපෙන්වීම','Guiding you towards a brighter tomorrow.':'ඔබව දීප්තිමත් හෙටක් වෙත මඟ පෙන්වීම.','Hirusara Astrology & Consultancy provides personalised horoscope creation, numerology and cultural astrology readings with care, confidentiality and tradition.':'හිරුසර ජ්‍යෝතිෂ්‍ය සේවය විශ්වාසය, රහස්‍යභාවය සහ සම්ප්‍රදාය සමග පුද්ගලික කේන්දර, අංක විද්‍යා හා සංස්කෘතික කියවීම් ලබා දෙයි.','About the Astrologer':'ජ්‍යෝතිෂ්‍යවේදී ගැන','Ranjith Wickramasinghe':'රංජිත් වික්‍රමසිංහ','Ranjith Wickramasinghe is an experienced and educated astrologer specialising in horoscope creation, numerology and traditional Sri Lankan cultural readings.':'රංජිත් වික්‍රමසිංහ මහතා කේන්දර සැකසීම, අංක විද්‍යාව සහ ශ්‍රී ලාංකීය සම්ප්‍රදායික ජ්‍යෝතිෂ්‍ය කියවීම් පිළිබඳ අත්දැකීම් සහිත දැනුවත් ජ්‍යෝතිෂ්‍යවේදියෙකි.','He is also a Justice of the Peace and a retired principal, bringing professionalism, discretion and trusted guidance to every consultation.':'ඔහු සාමදාන විනිශ්චයකාරවරයෙකු සහ විශ්‍රාමික විදුහල්පතිවරයෙකු ද වන අතර, සෑම උපදේශනයකටම වෘත්තීයභාවය, රහස්‍යභාවය සහ විශ්වාසනීය මගපෙන්වීම ලබා දෙයි.','Our Services':'සේවාවන්','Astrology Services We Provide':'අපි ලබාදෙන ජ්‍යෝතිෂ්‍ය සේවාවන්','Each service is prepared with care using your personal details, birth information and consultation request.':'ඔබගේ පුද්ගලික තොරතුරු, උපන් තොරතුරු සහ විමසීම අනුව සෑම සේවාවක්ම සැලකිල්ලෙන් සකස් කරනු ලැබේ.','Book Your Consultation':'ඔබේ උපදේශනය වෙන්කරන්න','Service':'සේවාව','Full Name':'සම්පූර්ණ නම','Email Address':'ඊමේල් ලිපිනය','Date of Birth':'උපන් දිනය','Birth Time':'උපන් වේලාව','Birth Place':'උපන් ස්ථානය','Questions or Notes':'ප්‍රශ්න හෝ සටහන්','Bank Details':'බැංකු විස්තර','I Have Paid':'ගෙවීම කළා','Subtotal':'උප එකතුව','Savings':'ඉතිරිය','Total Amount':'මුළු මුදල'};
+function applySinhalaTranslation(){
+ document.documentElement.lang='si';
+ document.querySelectorAll('a,button,p,h1,h2,h3,label,span,strong,small').forEach(el=>{
+   if(el.classList && el.classList.contains('lang-toggle')) return;
+   const txt=el.textContent.trim();
+   if(siMap[txt]) el.textContent=siMap[txt];
+ });
+}
 function translatePage(){
- if(localStorage.getItem('hirusaraLang')!=='si')return;
- document.querySelectorAll('a,button,p,h1,h2,h3,label,span,strong,small').forEach(el=>{const txt=el.textContent.trim(); if(siMap[txt]) el.textContent=siMap[txt];});
- const btn=document.querySelector('.lang-toggle'); if(btn)btn.textContent='EN';
+ // Always load in English on every page load. Translation only happens when the user presses the Sinhala button.
+ try{localStorage.removeItem('hirusaraLang')}catch(e){}
+ document.documentElement.lang='en';
 }
 function autoGeoRoute(){
  if(!document.body.classList.contains('landing'))return;
+ // Keep desktop behaviour unchanged: only mobile Sri Lanka visitors are auto-routed.
+ if(!window.matchMedia('(max-width: 980px)').matches)return;
  if(sessionStorage.getItem('hirusaraRegionSeen'))return;
  const goSL=()=>{sessionStorage.setItem('hirusaraRegionSeen','1'); location.replace('sl.html');};
  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
