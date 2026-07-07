@@ -92,8 +92,51 @@ function initBooking(){
 }
 function initMobileNav(){
  const nav=document.querySelector('.nav'); if(!nav)return;
- if(!nav.querySelector('.menu-toggle')){const b=document.createElement('button'); b.className='menu-toggle'; b.type='button'; b.textContent='☰'; b.setAttribute('aria-label','Open menu'); nav.prepend(b); b.addEventListener('click',()=>nav.classList.toggle('open'));}
- if(!nav.querySelector('.lang-toggle')){const lang=document.createElement('button'); lang.className='lang-toggle'; lang.type='button'; lang.textContent=localStorage.getItem('hirusaraLang')==='si'?'EN':'සිංහල'; nav.insertBefore(lang, nav.querySelector('.country')||nav.querySelector('.book-small')||null); lang.addEventListener('click',()=>{localStorage.setItem('hirusaraLang',localStorage.getItem('hirusaraLang')==='si'?'en':'si'); location.reload();});}
+ const isBooking = document.body.classList.contains('form-page') || location.pathname.includes('booking');
+ const currency = getCurrency();
+ const bookHref = bookingPage();
+ if(!nav.querySelector('.menu-toggle')){
+   const b=document.createElement('button');
+   b.className='menu-toggle';
+   b.type='button';
+   b.innerHTML='<span></span><span></span><span></span>';
+   b.setAttribute('aria-label','Open menu');
+   nav.prepend(b);
+   b.addEventListener('click',()=>nav.classList.toggle('open'));
+ }
+ if(!nav.querySelector('.lang-toggle')){
+   const lang=document.createElement('button');
+   lang.className='lang-toggle';
+   lang.type='button';
+   lang.textContent=localStorage.getItem('hirusaraLang')==='si'?'EN':'සිංහල';
+   nav.insertBefore(lang, nav.querySelector('.country')||nav.querySelector('.book-small')||null);
+   lang.addEventListener('click',()=>{localStorage.setItem('hirusaraLang',localStorage.getItem('hirusaraLang')==='si'?'en':'si'); location.reload();});
+ }
+ if(!nav.querySelector('.mobile-panel')){
+   const countryLinks = currency==='lkr'
+     ? `<a href="sl.html"><img class="flag" src="assets/international-flag.png"><span>Sri Lanka</span></a><a href="uk.html"><img class="flag" src="assets/uk-flag.png"><span>United Kingdom</span></a><a href="international.html"><img class="flag" src="assets/international-flag.png"><span>International</span></a>`
+     : `<a href="uk.html"><img class="flag" src="assets/uk-flag.png"><span>United Kingdom</span></a><a href="international.html"><img class="flag" src="assets/international-flag.png"><span>International</span></a>`;
+   const panel=document.createElement('div');
+   panel.className='mobile-panel';
+   panel.innerHTML=`
+     <div class="mobile-list">
+       <div class="mobile-title">Region</div>
+       ${countryLinks}
+       <div class="mobile-title">Social Media</div>
+       <a href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank"><span class="mobile-social-icon">f</span><span>Facebook</span></a>
+       <a href="https://www.instagram.com/hirusara.astro/" target="_blank"><span class="mobile-social-icon">◎</span><span>Instagram</span></a>
+     </div>`;
+   nav.appendChild(panel);
+   panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+ }
+ if(!document.querySelector('.mobile-book-float') && !document.body.classList.contains('landing') && !isBooking){
+   const fab=document.createElement('a');
+   fab.className='mobile-book-float';
+   fab.href=bookHref;
+   fab.setAttribute('aria-label','Book now');
+   fab.innerHTML='✦<span>Book Now</span>';
+   document.body.appendChild(fab);
+ }
 }
 const siMap={
  'HOME':'මුල් පිටුව','ABOUT':'අපි ගැන','SERVICES':'සේවාවන්','BOOK NOW':'වෙන්කරන්න','Unlock Your Future':'ඔබේ අනාගතය විවෘත කරන්න','View Services':'සේවාවන් බලන්න','Ancient wisdom • Modern guidance':'පුරාණ දැනුම • නව මගපෙන්වීම','Guiding you towards a brighter tomorrow.':'ඔබව දීප්තිමත් හෙටක් වෙත මඟ පෙන්වීම.','Hirusara Astrology & Consultancy provides personalised horoscope creation, numerology and cultural astrology readings with care, confidentiality and tradition.':'හිරුසර ජ්‍යෝතිෂ්‍ය සේවය විශ්වාසය, රහස්‍යභාවය සහ සම්ප්‍රදාය සමග පුද්ගලික කේන්දර, අංක විද්‍යා හා සංස්කෘතික කියවීම් ලබා දෙයි.','About the Astrologer':'ජ්‍යෝතිෂ්‍යවේදී ගැන','Ranjith Wickramasinghe':'රංජිත් වික්‍රමසිංහ','Ranjith Wickramasinghe is an experienced and educated astrologer specialising in horoscope creation, numerology and traditional Sri Lankan cultural readings.':'රංජිත් වික්‍රමසිංහ මහතා කේන්දර සැකසීම, අංක විද්‍යාව සහ ශ්‍රී ලාංකීය සම්ප්‍රදායික ජ්‍යෝතිෂ්‍ය කියවීම් පිළිබඳ අත්දැකීම් සහිත දැනුවත් ජ්‍යෝතිෂ්‍යවේදියෙකි.','He is also a Justice of the Peace and a retired principal, bringing professionalism, discretion and trusted guidance to every consultation.':'ඔහු සාමදාන විනිශ්චයකාරවරයෙකු සහ විශ්‍රාමික විදුහල්පතිවරයෙකු ද වන අතර, සෑම උපදේශනයකටම වෘත්තීයභාවය, රහස්‍යභාවය සහ විශ්වාසනීය මගපෙන්වීම ලබා දෙයි.','Our Services':'සේවාවන්','Astrology Services We Provide':'අපි ලබාදෙන ජ්‍යෝතිෂ්‍ය සේවාවන්','Each service is prepared with care using your personal details, birth information and consultation request.':'ඔබගේ පුද්ගලික තොරතුරු, උපන් තොරතුරු සහ විමසීම අනුව සෑම සේවාවක්ම සැලකිල්ලෙන් සකස් කරනු ලැබේ.','Book Your Consultation':'ඔබේ උපදේශනය වෙන්කරන්න','Service':'සේවාව','Full Name':'සම්පූර්ණ නම','Email Address':'ඊමේල් ලිපිනය','Date of Birth':'උපන් දිනය','Birth Time':'උපන් වේලාව','Birth Place':'උපන් ස්ථානය','Questions or Notes':'ප්‍රශ්න හෝ සටහන්','Bank Details':'බැංකු විස්තර','I Have Paid':'ගෙවීම කළා','Subtotal':'උප එකතුව','Savings':'ඉතිරිය','Total Amount':'මුළු මුදල'};
