@@ -91,6 +91,9 @@ function initBooking(){
  const params=new URLSearchParams(location.search); const pre=params.get('service'); if(pre!==null && services[+pre]) select.value=pre; calc();
 }
 function makePersonIcon(){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.2 4.2 0 1 0 0-8.4A4.2 4.2 0 0 0 12 12Zm0 2.2c-4.5 0-8 2.25-8 5.1 0 .7.55 1.1 1.25 1.1h13.5c.7 0 1.25-.4 1.25-1.1 0-2.85-3.5-5.1-8-5.1Z"/></svg>`}
+
+function makeWhatsAppIcon(){return `<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.02 3.2A12.72 12.72 0 0 0 5.2 22.6L3.7 28.8l6.34-1.48A12.7 12.7 0 1 0 16.02 3.2Zm0 22.9c-2.02 0-3.9-.58-5.5-1.58l-.4-.24-3.75.88.9-3.66-.26-.42A10.15 10.15 0 1 1 16.02 26.1Zm5.58-7.58c-.3-.15-1.8-.88-2.08-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.68-1.65-.94-2.26-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.52.07-.8.37-.27.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.8-.74 2.05-1.45.25-.7.25-1.3.18-1.44-.08-.13-.28-.2-.58-.35Z"/></svg>`}
+
 function closeHeaderMenus(except){
  document.querySelectorAll('.country.is-open,.icon-control.is-open,.lang-control.is-open').forEach(el=>{if(el!==except)el.classList.remove('is-open')});
 }
@@ -163,22 +166,29 @@ function initMobileNav(){
    panel.innerHTML=`
      <div class="mobile-list">
        ${countryLinks}
+       <div class="mobile-title">Language</div>
+       <button type="button" class="mobile-menu-row mobile-lang-choice" data-lang-choice="en"><span class="mobile-social-icon">EN</span><span>English</span></button>
+       <button type="button" class="mobile-menu-row mobile-lang-choice" data-lang-choice="si"><span class="mobile-social-icon">SI</span><span>සිංහල</span></button>
        <div class="mobile-title">Social Media</div>
-       <a href="https://wa.me/447493157312" target="_blank"><span class="mobile-social-icon">☏</span><span>WhatsApp: +44 7493 157312</span></a>
+       <a href="https://wa.me/447493157312" target="_blank"><span class="mobile-social-icon whatsapp-menu-icon">${makeWhatsAppIcon()}</span><span>WhatsApp</span></a>
        <a href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank"><span class="mobile-social-icon">f</span><span>Facebook</span></a>
        <a href="https://www.instagram.com/hirusara.astro/" target="_blank"><span class="mobile-social-icon">◎</span><span>Instagram</span></a>
-       <div class="mobile-title">Admin</div>
-       <a href="admin.html"><span class="mobile-social-icon">↪</span><span>Login / Account</span></a>
      </div>`;
    nav.appendChild(panel);
    panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+   panel.querySelectorAll('[data-lang-choice]').forEach(choice=>choice.addEventListener('click',()=>{
+     const lang=choice.dataset.langChoice;
+     if(lang==='si'){localStorage.setItem('hirusaraLang','si');document.documentElement.lang='si';renderServices();initBooking();applySinhalaTranslation();}
+     else{localStorage.removeItem('hirusaraLang');location.reload();}
+     nav.classList.remove('open');
+   }));
  }
  if(!document.querySelector('.mobile-book-float') && !document.body.classList.contains('landing') && !isBooking){
    const fab=document.createElement('a');
    fab.className='mobile-book-float';
    fab.href=bookHref;
    fab.setAttribute('aria-label','Book now');
-   fab.innerHTML='<img src="assets/mobile-book-icon.svg" alt="Book Now">';
+   fab.innerHTML='<img src="assets/book-now-mobile-v26.png" alt="Book Now">';
    document.body.appendChild(fab);
  }
 }
@@ -199,7 +209,6 @@ function translatePage(){
 }
 function autoGeoRoute(){
  if(!document.body.classList.contains('landing'))return;
- if(!window.matchMedia('(max-width: 980px)').matches)return;
  const goSL=()=>{sessionStorage.setItem('hirusaraRegionSeen','1'); location.replace('sl.html');};
  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
  const langs=[navigator.language||'',...(navigator.languages||[])].join(' ').toLowerCase();
