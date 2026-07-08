@@ -90,6 +90,53 @@ function initBooking(){
  });
  const params=new URLSearchParams(location.search); const pre=params.get('service'); if(pre!==null && services[+pre]) select.value=pre; calc();
 }
+function makePersonIcon(){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.2 4.2 0 1 0 0-8.4A4.2 4.2 0 0 0 12 12Zm0 2.2c-4.5 0-8 2.25-8 5.1 0 .7.55 1.1 1.25 1.1h13.5c.7 0 1.25-.4 1.25-1.1 0-2.85-3.5-5.1-8-5.1Z"/></svg>`}
+function closeHeaderMenus(except){
+ document.querySelectorAll('.country.is-open,.icon-control.is-open,.lang-control.is-open').forEach(el=>{if(el!==except)el.classList.remove('is-open')});
+}
+function setupHeaderDropdowns(){
+ document.querySelectorAll('.country').forEach(c=>{
+   const b=c.querySelector('button'); if(!b || b.dataset.clickReady)return; b.dataset.clickReady='1';
+   b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const open=c.classList.toggle('is-open');closeHeaderMenus(open?c:null);});
+ });
+ document.addEventListener('click',()=>closeHeaderMenus(null));
+}
+function ensureAccountControl(nav){
+ if(nav.querySelector('.account-control'))return;
+ const holder=document.createElement('div');
+ holder.className='icon-control account-control';
+ holder.innerHTML=`<button class="account-btn" type="button" aria-label="Account">${makePersonIcon()}</button><div class="control-menu account-menu"></div>`;
+ const old=nav.querySelector('.login-link');
+ if(old) old.insertAdjacentElement('afterend',holder); else nav.insertBefore(holder, nav.querySelector('.book-small')||null);
+ const btn=holder.querySelector('.account-btn');
+ btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const open=holder.classList.toggle('is-open');closeHeaderMenus(open?holder:null);});
+ renderAccountMenu(holder);
+}
+function renderAccountMenu(holder){
+ const menu=holder.querySelector('.account-menu'); if(!menu)return;
+ const logged=sessionStorage.getItem('hirusaraAdmin')==='1';
+ if(logged){menu.innerHTML=`<a href="admin.html">Account</a><button type="button" data-admin-logout>Logout</button>`;}
+ else{menu.innerHTML=`<a href="admin.html">Login</a>`;}
+ menu.querySelector('[data-admin-logout]')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');renderAllAccountMenus();showToast('Logged out.');});
+}
+function renderAllAccountMenus(){document.querySelectorAll('.account-control').forEach(renderAccountMenu)}
+function ensureLangControl(nav){
+ if(nav.querySelector('.lang-control'))return;
+ const holder=document.createElement('div'); holder.className='lang-control';
+ holder.innerHTML=`<button class="lang-btn" type="button" aria-label="Language">EN</button><div class="control-menu lang-menu"><button type="button" data-lang-choice="en">English</button><button type="button" data-lang-choice="si">සිංහල</button></div>`;
+ nav.insertBefore(holder, nav.querySelector('.country')||nav.querySelector('.account-control')||nav.querySelector('.book-small')||null);
+ const btn=holder.querySelector('.lang-btn');
+ btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const open=holder.classList.toggle('is-open');closeHeaderMenus(open?holder:null);});
+ holder.querySelectorAll('[data-lang-choice]').forEach(choice=>choice.addEventListener('click',()=>{
+   const lang=choice.dataset.langChoice;
+   if(lang==='si'){
+     localStorage.setItem('hirusaraLang','si'); document.documentElement.lang='si'; btn.textContent='SI'; renderServices(); initBooking(); applySinhalaTranslation();
+   }else{
+     localStorage.removeItem('hirusaraLang'); location.reload();
+   }
+   holder.classList.remove('is-open');
+ }));
+}
 function initMobileNav(){
  const nav=document.querySelector('.nav'); if(!nav)return;
  const isBooking = document.body.classList.contains('form-page') || location.pathname.includes('booking');
@@ -104,23 +151,9 @@ function initMobileNav(){
    nav.prepend(b);
    b.addEventListener('click',()=>nav.classList.toggle('open'));
  }
- if(!nav.querySelector('.lang-toggle')){
-   const lang=document.createElement('button');
-   lang.className='lang-toggle';
-   lang.type='button';
-   lang.textContent='සිංහල';
-   lang.dataset.lang='en';
-   nav.insertBefore(lang, nav.querySelector('.country')||nav.querySelector('.book-small')||null);
-   lang.addEventListener('click',()=>{
-     if(lang.dataset.lang==='en'){
-       applySinhalaTranslation();
-       lang.dataset.lang='si';
-       lang.textContent='EN';
-     } else {
-       location.reload();
-     }
-   });
- }
+ ensureLangControl(nav);
+ ensureAccountControl(nav);
+ setupHeaderDropdowns();
  if(!nav.querySelector('.mobile-panel')){
    const countryLinks = currency==='lkr'
      ? ''
@@ -131,8 +164,11 @@ function initMobileNav(){
      <div class="mobile-list">
        ${countryLinks}
        <div class="mobile-title">Social Media</div>
+       <a href="https://wa.me/447493157312" target="_blank"><span class="mobile-social-icon">☏</span><span>WhatsApp: +44 7493 157312</span></a>
        <a href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank"><span class="mobile-social-icon">f</span><span>Facebook</span></a>
        <a href="https://www.instagram.com/hirusara.astro/" target="_blank"><span class="mobile-social-icon">◎</span><span>Instagram</span></a>
+       <div class="mobile-title">Admin</div>
+       <a href="admin.html"><span class="mobile-social-icon">↪</span><span>Login / Account</span></a>
      </div>`;
    nav.appendChild(panel);
    panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
@@ -142,7 +178,7 @@ function initMobileNav(){
    fab.className='mobile-book-float';
    fab.href=bookHref;
    fab.setAttribute('aria-label','Book now');
-   fab.innerHTML='<img src="assets/book-now-mobile.png" alt="Book Now">';
+   fab.innerHTML='<img src="assets/mobile-book-icon.svg" alt="Book Now">';
    document.body.appendChild(fab);
  }
 }
@@ -163,19 +199,94 @@ function translatePage(){
 }
 function autoGeoRoute(){
  if(!document.body.classList.contains('landing'))return;
- // Keep desktop behaviour unchanged: only mobile Sri Lanka visitors are auto-routed.
  if(!window.matchMedia('(max-width: 980px)').matches)return;
- if(sessionStorage.getItem('hirusaraRegionSeen'))return;
  const goSL=()=>{sessionStorage.setItem('hirusaraRegionSeen','1'); location.replace('sl.html');};
  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
- const lang=(navigator.language||'').toLowerCase();
- if(tz==='Asia/Colombo' || lang.includes('si-lk')){goSL();return;}
- // Optional IP based country check. This improves automatic routing on GitHub Pages,
- // while keeping the Sri Lanka page unlisted from the UK / International selector.
- const ctrl=new AbortController(); setTimeout(()=>ctrl.abort(),1800);
+ const langs=[navigator.language||'',...(navigator.languages||[])].join(' ').toLowerCase();
+ if(tz==='Asia/Colombo' || langs.includes('si-lk') || langs.includes('en-lk')){goSL();return;}
+ const checked=sessionStorage.getItem('hirusaraGeoChecked');
+ if(checked==='LK'){goSL();return;}
+ if(checked==='OTHER' && sessionStorage.getItem('hirusaraRegionSeen'))return;
+ const ctrl=new AbortController(); setTimeout(()=>ctrl.abort(),2600);
  fetch('https://ipapi.co/json/',{signal:ctrl.signal})
    .then(r=>r.ok?r.json():null)
-   .then(d=>{if(d && d.country_code==='LK')goSL();})
+   .then(d=>{
+      if(d && d.country_code==='LK'){sessionStorage.setItem('hirusaraGeoChecked','LK');goSL();return;}
+      return fetch('https://ipwho.is/',{signal:ctrl.signal}).then(r=>r.ok?r.json():null).then(x=>{
+        if(x && x.country_code==='LK'){sessionStorage.setItem('hirusaraGeoChecked','LK');goSL();}
+        else sessionStorage.setItem('hirusaraGeoChecked','OTHER');
+      });
+   })
    .catch(()=>{});
 }
-renderServices(); initBooking(); initMobileNav(); translatePage(); autoGeoRoute();
+
+function getReviews(){try{return JSON.parse(localStorage.getItem('hirusaraReviews')||'[]')}catch(e){return []}}
+function saveReviews(list){localStorage.setItem('hirusaraReviews',JSON.stringify(list))}
+function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function initReviews(){
+ const form=document.getElementById('reviewForm');
+ const stars=document.querySelectorAll('#reviewStars .star');
+ const rating=document.getElementById('reviewRating');
+ if(stars.length){const paint=(n)=>stars.forEach(s=>s.classList.toggle('active',+s.dataset.star<=n));paint(5);stars.forEach(s=>s.addEventListener('click',()=>{rating.value=s.dataset.star;paint(+s.dataset.star)}));}
+ if(form){form.addEventListener('submit',e=>{e.preventDefault();const list=getReviews();list.push({id:Date.now(),name:document.getElementById('reviewName').value.trim(),rating:+rating.value||5,text:document.getElementById('reviewText').value.trim(),status:'pending',created:new Date().toISOString()});saveReviews(list);form.reset();rating.value=5;stars.forEach(s=>s.classList.add('active'));showToast('Review has been received.');});}
+ renderTestimonials();
+}
+let testimonialTimer=null;
+function renderTestimonials(){const box=document.getElementById('testimonials'), card=document.getElementById('testimonialCard'); if(!box||!card)return; const approved=getReviews().filter(r=>r.status==='approved'); if(approved.length<3){box.style.display='none';return;} box.style.display='block'; let i=0; const draw=()=>{const r=approved[i%approved.length];card.innerHTML=`<div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><h3>${r.name}</h3><p class="muted">“${r.text}”</p>`;i++;}; draw(); if(testimonialTimer)clearInterval(testimonialTimer); testimonialTimer=setInterval(draw,8000);}
+function setLoginLinks(){
+ const isBooking=location.pathname.includes('booking');
+ const isAdmin=sessionStorage.getItem('hirusaraAdmin')==='1';
+ document.querySelectorAll('.login-link').forEach(a=>{
+   if(isBooking){a.style.display='none';return;}
+   a.style.display='inline-flex';
+   a.textContent=isAdmin?'ACCOUNT':'LOGIN';
+   a.href='admin.html';
+ });
+}
+function initAdmin(){
+ const login=document.getElementById('adminLogin'), panel=document.getElementById('adminPanel'), list=document.getElementById('adminReviews'), userBar=document.getElementById('adminUserBar'), title=document.getElementById('adminTitle'), card=document.querySelector('.admin-card');
+ if(!login)return;
+ const logged=()=>sessionStorage.getItem('hirusaraAdmin')==='1';
+ const render=()=>{
+   if(!logged()){
+     panel.style.display='none'; login.style.display='block';
+     if(card) card.classList.add('login-mode');
+     if(userBar) userBar.style.display='none'; if(title){title.textContent='Admin Login'; title.classList.remove('admin-small-title');}
+     setLoginLinks();
+     return;
+   }
+   login.style.display='none'; panel.style.display='block';
+   if(card) card.classList.remove('login-mode');
+   if(userBar) userBar.style.display='flex'; if(title){title.textContent='Admin Login'; title.classList.add('admin-small-title');}
+   setLoginLinks();
+   const rows=getReviews();
+   const approved=rows.filter(r=>r.status==='approved');
+   const pending=rows.filter(r=>r.status!=='approved');
+   const cardHtml=(r,type)=>`<div class="admin-item ${type==='approved'?'approved-review':'pending-review'}"><strong>${r.name}</strong> <span class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><span class="admin-status ${type==='approved'?'approved':''}">${type==='approved'?'Approved / Live':'Pending Review'}</span><p>${r.text}</p><div class="admin-actions">${type==='approved'?'':`<button data-act="approve" data-id="${r.id}">Approve</button>`}<button data-act="delete" data-id="${r.id}">Delete</button></div></div>`;
+   list.innerHTML = rows.length ? `<div class="admin-section"><h3>Approved Reviews / Current Testimonials</h3><p class="muted">These reviews are approved and can appear in the rotating testimonials section.</p>${approved.length?approved.map(r=>cardHtml(r,'approved')).join(''):'<p class="muted">No approved reviews yet.</p>'}</div><div class="admin-section"><h3>Pending Reviews</h3><p class="muted">Approve reviews to publish them, or delete anything unsuitable.</p>${pending.length?pending.map(r=>cardHtml(r,'pending')).join(''):'<p class="muted">No pending reviews.</p>'}</div>` : '<p class="muted">No reviews submitted yet.</p>';
+ };
+ login.addEventListener('submit',e=>{e.preventDefault();const email=document.getElementById('adminEmail').value.trim();const pass=document.getElementById('adminPass').value;if(email==='hirusara.astro@gmail.com'&&pass==='KAMAra@57'){sessionStorage.setItem('hirusaraAdmin','1');render();}else showToast('Invalid login details.');});
+ list?.addEventListener('click',e=>{
+   const btn=e.target.closest('button');if(!btn)return;let rows=getReviews();const id=+btn.dataset.id;
+   if(btn.dataset.act==='approve')rows=rows.map(r=>r.id===id?{...r,status:'approved'}:r);
+   if(btn.dataset.act==='delete'){
+     const actions=btn.closest('.admin-actions');
+     if(actions){actions.innerHTML=`<span class="confirm-delete">Are you sure?</span><button data-act="confirm-delete" data-id="${id}">Yes</button><button data-act="cancel-delete" data-id="${id}">No</button>`;}
+     return;
+   }
+   if(btn.dataset.act==='confirm-delete')rows=rows.filter(r=>r.id!==id);
+   if(btn.dataset.act==='cancel-delete'){render();return;}
+   saveReviews(rows);render();
+ });
+ document.getElementById('logoutAdmin')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');render();});
+ render();
+}
+function initPasswordToggle(){
+ const eyeClosed='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6c2 0 3.7.5 5.1 1.3L19.4 5 21 6.6 5.6 22 4 20.4l2.3-2.3C3.8 16.4 2.5 12 2.5 12Zm7.2 2.9 1.4-1.4a2.2 2.2 0 0 1-.6-1.5 2.4 2.4 0 0 1 2.4-2.4c.6 0 1.1.2 1.5.6l1.4-1.4A5 5 0 0 0 7 12c0 1.1.4 2.1 1.1 3l1.6-.1Zm2.3 3.1c-4.4 0-7.2-3.6-8.3-5.5.5-.8 1.5-2.1 3-3.2L8 8c-2.7 1.8-4.2 4-5.5 6 1.4 2.4 4.8 6 9.5 6 1.9 0 3.5-.4 5-1.2l-1.6-1.6c-1 .5-2.1.8-3.4.8Zm9.5-6c-.6 1-1.6 2.5-3.1 3.7L17 14.3c.5-.7.8-1.5.8-2.3a5 5 0 0 0-5-5c-.8 0-1.6.2-2.3.6L8.9 6.1A9.8 9.8 0 0 1 12 5c6 0 9.5 7 9.5 7Z"/></svg>';
+ const eyeOpen='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c6 0 9.5 7 9.5 7S18 19 12 19s-9.5-7-9.5-7S6 5 12 5Zm0 2C8.1 7 5.4 10.2 4.8 12c.6 1.8 3.3 5 7.2 5s6.6-3.2 7.2-5c-.6-1.8-3.3-5-7.2-5Zm0 2.2A2.8 2.8 0 1 1 12 14.8 2.8 2.8 0 0 1 12 9.2Z"/></svg>';
+ document.querySelectorAll('.password-wrap').forEach(w=>{const input=w.querySelector('input'), btn=w.querySelector('.password-toggle'); if(!input||!btn)return; btn.innerHTML=eyeClosed; btn.addEventListener('click',()=>{const show=input.type==='password'; input.type=show?'text':'password'; btn.innerHTML=show?eyeOpen:eyeClosed; btn.setAttribute('aria-label',show?'Hide password':'Show password');});});
+}
+function syncLoginVisibility(){ setLoginLinks(); renderAllAccountMenus(); }
+
+
+renderServices(); initBooking(); initMobileNav(); initReviews(); initAdmin(); initPasswordToggle(); syncLoginVisibility(); translatePage(); autoGeoRoute();
