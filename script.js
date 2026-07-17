@@ -1,41 +1,47 @@
 const servicesGBP=[
-{icon:'📜',name:'Horoscope Creation (Local)',price:20,desc:'Personal horoscope prepared for local clients using traditional Sri Lankan astrological methods.'},
-{icon:'🌍',name:'Horoscope Creation (International)',price:20,desc:'Detailed horoscope service for clients living outside Sri Lanka and the UK.'},
-{icon:'👶',name:'Horoscope Creation (Newborns)',price:20,desc:'A newborn horoscope prepared using birth date, time and place for family guidance.'},
-{icon:'💍',name:'Readings for Weddings',price:20,desc:'Auspicious guidance for marriage arrangements, compatibility and wedding timing.'},
-{icon:'🏢',name:'Readings for Businesses',price:20,desc:'Astrological guidance for business openings, decisions and favourable timing.'},
-{icon:'🌸',name:'Readings for Puberty',price:20,desc:'Traditional guidance connected to puberty ceremonies and auspicious observances.'},
-{icon:'🔤',name:'Readings for Letter Readings',price:20,desc:'Guidance for choosing favourable letters and names according to cultural practice.'},
-{icon:'✂️',name:'Readings for Cutting Hair',price:20,desc:'Auspicious timing for first hair cutting and related family traditions.'},
-{icon:'👂',name:'Readings for Piercing Ears',price:20,desc:'Auspicious guidance for ear-piercing ceremonies and suitable timing.'},
-{icon:'3',name:'Custom Readings for 3 Topics for the Next 5 Years',price:25,desc:'Personalised guidance for three chosen life topics over the next five years.'},
-{icon:'6',name:'Custom Readings for 6 Topics for the Next 10 Years',price:30,desc:'Extended personalised guidance for six chosen topics over the next ten years.'},
-{icon:'★',name:'Multiple Readings (Custom)',price:null,desc:'Best value package for combining multiple readings, with savings of up to 20%.'}
+{icon:'📜',name:'Horoscope Preparation (Local)',si:'දේශීය ජන්ම පත්‍රයක් සෑදීම',price:20,desc:'A detailed and accurate horoscope prepared from the date, time and place of birth.'},
+{icon:'🌍',name:'Horoscope Preparation (Foreign)',si:'විදේශීය ජන්ම පත්‍රයක් සෑදීම',price:20,desc:'A detailed and accurate horoscope prepared from the date, time and place of birth at a foreign location.'},
+{icon:'🗓️',name:'Prediction Report (For 1 Year)',si:'පලාපල වාර්තාව (වසරක් සඳහා)',price:20,desc:'A detailed prediction report for the next 12 months, covering the major areas of life.'},
+{icon:'🔭',name:'Prediction Report (For 5 Years)',si:'පලාපල වාර්තාව (වසර පහක් සඳහා)',price:25,desc:'A detailed prediction report for the next five years, covering the major areas of life.'},
+{icon:'👶',name:'Horoscope Preparation for a Newborn',si:'අලුත උපන් දරුවකු සඳහා ජන්ම පත්‍රයක්',price:20,desc:'A detailed and accurate newborn horoscope, including a one-year prediction report.'},
+{icon:'💍',name:'Marriage Compatibility Analysis',si:'විවාහ පොරොන්දම් පරීක්ෂාව හා දෝෂ විශ්ලේෂණය',price:30,desc:'A detailed comparison with a compatibility score and careful analysis of potential marital concerns.'},
+{icon:'🏠',name:'Auspicious Times for Home and Business Related Events',si:'නිවාස හා ව්‍යාපාරික කටයුතු සඳහා නැකත්',price:20,desc:'Auspicious times for construction, housewarming, laying foundation stones and other home or business-related ceremonies.'},
+{icon:'✨',name:'General Auspicious Times',si:'සාමාන්‍ය නැකත්',price:20,desc:'Auspicious times for ceremonies such as first reading, ear piercing, first haircut and other important occasions.'},
+{icon:'🔤',name:'Auspicious Letters for the Child',si:'දරුවාගේ නමට සුබ අකුරු',price:20,desc:'Auspicious letters for a child’s name, selected according to the child’s horoscope.'},
+{icon:'🏢',name:'Auspicious Letters for the Business',si:'ස්ථානයේ නමට අකුරු',price:20,desc:'Auspicious letters for a business name, selected according to the owner’s horoscope.'},
+{icon:'🌸',name:'Puberty Auspicious Times',si:'මල්වර නැකත්',price:25,desc:'An auspicious time for a daughter’s puberty ceremony, based on the date, time and place of puberty and Sri Lankan astrological tradition.'},
+{icon:'💒',name:'Wedding Auspicious Times',si:'විවාහ නැකත්',price:40,desc:'A complete set of auspicious times required for a traditional wedding ceremony.'}
 ];
 const servicesLKR=[
-{icon:'📜',name:'දේශීය කේන්දර සැදීම / Horoscope Creation (Local)',price:3000,desc:'ශ්‍රී ලංකාවේ පාරිභෝගිකයන් සඳහා උපන් වේලාව හා උපන් ස්ථානය අනුව සකස් කරන කේන්දර සේවාව.'},
-{icon:'🌍',name:'විදේශීය කේන්දර සැදීම / Horoscope Creation (International)',price:4000,desc:'විදේශගත ශ්‍රී ලාංකිකයන් සඳහා විස්තරාත්මක කේන්දර සකස් කිරීම.'},
-{icon:'👶',name:'අලුත උපන් දරුවන්ට කේන්දර සැදීම / Horoscope Creation (Newborns)',price:3000,desc:'නව උපන් දරුවෙකුගේ උපන් තොරතුරු අනුව පවුල් මගපෙන්වීම සඳහා කේන්දරයක්.'},
-{icon:'💍',name:'විවාහ පොරොන්දම් හා විවාහ දෝෂ ගැලපීම / Wedding Readings',price:3500,desc:'විවාහ ගැලපීම, සුබ වේලාවන් හා පවුල් සම්ප්‍රදායන් සඳහා මගපෙන්වීම.'},
-{icon:'🏠',name:'ව්‍යාපාර ස්ථානයක් ආරම්භ කිරීමට සුභ මූහුර්තියක් / Business Readings',price:3000,desc:'ව්‍යාපාර ආරම්භය, තීරණ සහ සුබ කාල තෝරා ගැනීම සඳහා උපදෙස්.'},
-{icon:'💼',name:'ව්‍යාපාරයක් ආරම්භ කිරීමට සුභ අක්ෂර ලබාදීම / Business Letter Readings',price:2500,desc:'ව්‍යාපාර නාමය සහ ආරම්භක අක්ෂර සම්බන්ධ සංස්කෘතික මගපෙන්වීම.'},
-{icon:'⭐',name:'ගෙට ගෙවදීම සඳහා මූහුර්තයක් සැදීම / Housewarming Reading',price:3000,desc:'නව නිවසට ගෙවදීම සඳහා සුබ දිනය හා වේලාව සොයාදීම.'},
-{icon:'✈️',name:'මෙරටින් පිටවීමට නැකතක් සැදීම / Foreign Travel Reading',price:2500,desc:'විදේශ ගමන් හා සම්බන්ධ සුබ වේලාවන් පිළිබඳ මගපෙන්වීම.'},
-{icon:'👶',name:'අකුරු කියවීමේ නැකතක් සැදීම / Letter Reading',price:2500,desc:'අකුරු කියවීමේ උත්සවයට සුදුසු දිනය හා වේලාව තෝරාදීම.'},
-{icon:'📖',name:'නිරෝගී කාලීමට නැකතක් සැදීම / Health Reading',price:2500,desc:'නිරෝගීභාවය හා යහපත් කාලය පිළිබඳ සංස්කෘතික මගපෙන්වීම.'},
-{icon:'⚖️',name:'නඩු විභාගයට නැකතක් සැදීම / Court Matter Reading',price:2500,desc:'අධිකරණ කටයුතු හා විශේෂ අවස්ථා සඳහා සුබ වේලාවන් පිළිබඳ උපදෙස්.'},
-{icon:'03',name:'ඔබ තෝරන විෂය කරුණු 03කට ඉදිරි වසර 5කට පලාපල / 3 Topics, 5 Years',price:3000,desc:'ඔබ තෝරාගත් විෂය කරුණු තුනක් පිළිබඳ වසර පහක පුද්ගලික මගපෙන්වීම.'},
-{icon:'06',name:'ඔබ තෝරන විෂය කරුණු 06කට ඉදිරි වසර 10කට පලාපල / 6 Topics, 10 Years',price:3500,desc:'විෂය කරුණු හයකට අදාළ වසර දහයක විස්තරාත්මක පලාපල.'},
-{icon:'13',name:'ඔබ තෝරන විෂය කරුණු 13කට ඉදිරි වසර 13කට පලාපල / 13 Topics, 13 Years',price:4500,desc:'විෂය කරුණු දහතුනක් සඳහා දීර්ඝ කාලීන විශේෂ පලාපල.'},
-{icon:'💎',name:'විවාහ මංගල්‍යය සඳහා සම්පූර්ණ සුභ මූහුර්ත 10ක් / Complete Wedding Package',price:18000,desc:'විවාහ මංගල්‍යය සඳහා සම්පූර්ණ සුභ මූහුර්ත පැකේජයක්.'},
-{icon:'★',name:'Multiple Readings (Custom)',price:null,desc:'ඔබට අවශ්‍ය සේවා කිහිපයක් එකට තෝරාගත හැකි විශේෂ පැකේජයකි.'}
+{icon:'📜',name:'Horoscope Preparation (Local)',si:'දේශීය ජන්ම පත්‍රයක් සෑදීම',price:3000,desc:'උපන් දිනය, වේලාව සහ ස්ථානය අනුව සවිස්තරාත්මක හා නිවැරදි ජන්ම පත්‍රයක් සකස් කිරීම.'},
+{icon:'🌍',name:'Horoscope Preparation (Foreign)',si:'විදේශීය ජන්ම පත්‍රයක් සෑදීම',price:4000,desc:'විදේශීය උපන් ස්ථානයක් සඳහා උපන් දිනය, වේලාව සහ ස්ථානය අනුව සවිස්තරාත්මක ජන්ම පත්‍රයක් සකස් කිරීම.'},
+{icon:'🗓️',name:'Prediction Report (For 1 Year)',si:'පලාපල වාර්තාව (වසරක් සඳහා)',price:3000,desc:'ජීවිතයේ ප්‍රධාන අංශ ආවරණය කරන ඉදිරි මාස 12 සඳහා සවිස්තරාත්මක පලාපල වාර්තාවක්.'},
+{icon:'🔭',name:'Prediction Report (For 5 Years)',si:'පලාපල වාර්තාව (වසර පහක් සඳහා)',price:3500,desc:'ජීවිතයේ ප්‍රධාන අංශ ආවරණය කරන ඉදිරි වසර පහ සඳහා සවිස්තරාත්මක පලාපල වාර්තාවක්.'},
+{icon:'👶',name:'Horoscope Preparation for a Newborn',si:'අලුත උපන් දරුවකු සඳහා ජන්ම පත්‍රයක්',price:3000,desc:'අලුත උපන් දරුවකු සඳහා වසරක පලාපල වාර්තාවක් සමඟ සවිස්තරාත්මක ජන්ම පත්‍රයක්.'},
+{icon:'💍',name:'Marriage Compatibility Analysis',si:'විවාහ පොරොන්දම් පරීක්ෂාව හා දෝෂ විශ්ලේෂණය',price:3500,desc:'ගැළපීමේ ලකුණු, සවිස්තරාත්මක සංසන්දනය සහ විවාහ දෝෂ පිළිබඳ නිවැරදි විශ්ලේෂණය.'},
+{icon:'🏠',name:'Auspicious Times for Home and Business Related Events',si:'නිවාස හා ව්‍යාපාරික කටයුතු සඳහා නැකත්',price:3000,desc:'ඉදිකිරීම්, ගෙවදීම, මුල්ගල් තැබීම සහ වෙනත් නිවාස හෝ ව්‍යාපාරික සුබ කටයුතු සඳහා නැකත්.'},
+{icon:'✨',name:'General Auspicious Times',si:'සාමාන්‍ය නැකත්',price:2500,desc:'අකුරු කියවීම, කන් විදීම, පළමු හිසකෙස් කැපීම සහ වෙනත් සුබ කටයුතු සඳහා නැකත්.'},
+{icon:'🔤',name:'Auspicious Letters for the Child',si:'දරුවාගේ නමට සුබ අකුරු',price:2500,desc:'දරුවාගේ ජන්ම පත්‍රය අනුව නම තැබීමට සුබ අකුරු.'},
+{icon:'🏢',name:'Auspicious Letters for the Business',si:'ස්ථානයේ නමට අකුරු',price:2500,desc:'ව්‍යාපාර හිමිකරුගේ ජන්ම පත්‍රය අනුව ව්‍යාපාර නාමයට සුබ අකුරු.'},
+{icon:'🌸',name:'Puberty Auspicious Times',si:'මල්වර නැකත්',price:2500,desc:'මල්වර වූ දිනය, වේලාව සහ ස්ථානය අනුව දියණියගේ මල්වර උත්සවයට සුබ වේලාව.'},
+{icon:'💒',name:'Wedding Auspicious Times',si:'විවාහ නැකත්',price:18000,desc:'සාම්ප්‍රදායික විවාහ උත්සවයක් සඳහා අවශ්‍ය සියලුම සුබ නැකත්.'}
 ];
 const rate=1.30;
-
-const siServiceNames={
-'Horoscope Creation (Local)':'දේශීය කේන්දර සැදීම','Horoscope Creation (International)':'විදේශීය කේන්දර සැදීම','Horoscope Creation (Newborns)':'අලුත උපන් දරුවන්ට කේන්දර සැදීම','Readings for Weddings':'විවාහ කියවීම්','Readings for Businesses':'ව්‍යාපාර කියවීම්','Readings for Puberty':'වැඩිවිය පත් වීමේ කියවීම්','Readings for Letter Readings':'අකුරු කියවීම්','Readings for Cutting Hair':'හිසකෙස් කැපීමේ නැකත්','Readings for Piercing Ears':'කන් විදීමේ නැකත්','Custom Readings for 3 Topics for the Next 5 Years':'විෂය කරුණු 3කට වසර 5ක පලාපල','Custom Readings for 6 Topics for the Next 10 Years':'විෂය කරුණු 6කට වසර 10ක පලාපල','Multiple Readings (Custom)':'බහු කියවීම් පැකේජය'};
+const siServiceNames=Object.fromEntries(servicesGBP.map(s=>[s.name,s.si]));
 const siServiceDescs={
-'Horoscope Creation (Local)':'ශ්‍රී ලාංකීය ජ්‍යෝතිෂ්‍ය ක්‍රම අනුව සකස් කරන පුද්ගලික කේන්දර සේවාව.','Horoscope Creation (International)':'විදේශගත පාරිභෝගිකයන් සඳහා විස්තරාත්මක කේන්දර සකස් කිරීම.','Horoscope Creation (Newborns)':'නව උපන් දරුවන්ගේ උපන් තොරතුරු අනුව පවුල් මගපෙන්වීම.','Readings for Weddings':'විවාහ ගැලපීම, සුබ වේලාවන් සහ පවුල් සම්ප්‍රදායන් සඳහා මගපෙන්වීම.','Readings for Businesses':'ව්‍යාපාර ආරම්භය සහ තීරණ සඳහා සුබ කාල පිළිබඳ මගපෙන්වීම.','Readings for Puberty':'වැඩිවිය පත් වීමේ සම්ප්‍රදායන් හා සුබ වේලාවන් පිළිබඳ මගපෙන්වීම.','Readings for Letter Readings':'නම් සහ අකුරු තෝරා ගැනීම සම්බන්ධ සංස්කෘතික මගපෙන්වීම.','Readings for Cutting Hair':'පළමු හිසකෙස් කැපීම සහ සම්ප්‍රදායික අවස්ථා සඳහා සුබ කාලය.','Readings for Piercing Ears':'කන් විදීමේ උත්සවයට සුදුසු දිනය සහ වේලාව.','Custom Readings for 3 Topics for the Next 5 Years':'ඔබ තෝරාගත් විෂය කරුණු තුනක් සඳහා වසර පහක පුද්ගලික මගපෙන්වීම.','Custom Readings for 6 Topics for the Next 10 Years':'විෂය කරුණු හයක් සඳහා වසර දහයක දීර්ඝ පලාපල.','Multiple Readings (Custom)':'සේවා කිහිපයක් එකට තෝරාගත හැකි විශේෂ පැකේජයකි.'};
+'Horoscope Preparation (Local)':'උපන් දිනය, වේලාව සහ ස්ථානය අනුව සවිස්තරාත්මක හා නිවැරදි ජන්ම පත්‍රයක් සකස් කිරීම.',
+'Horoscope Preparation (Foreign)':'විදේශීය උපන් ස්ථානයක් සඳහා උපන් දිනය, වේලාව සහ ස්ථානය අනුව සවිස්තරාත්මක ජන්ම පත්‍රයක් සකස් කිරීම.',
+'Prediction Report (For 1 Year)':'ජීවිතයේ ප්‍රධාන අංශ ආවරණය කරන ඉදිරි මාස 12 සඳහා සවිස්තරාත්මක පලාපල වාර්තාවක්.',
+'Prediction Report (For 5 Years)':'ජීවිතයේ ප්‍රධාන අංශ ආවරණය කරන ඉදිරි වසර පහ සඳහා සවිස්තරාත්මක පලාපල වාර්තාවක්.',
+'Horoscope Preparation for a Newborn':'අලුත උපන් දරුවකු සඳහා වසරක පලාපල වාර්තාවක් සමඟ සවිස්තරාත්මක ජන්ම පත්‍රයක්.',
+'Marriage Compatibility Analysis':'ගැළපීමේ ලකුණු, සවිස්තරාත්මක සංසන්දනය සහ විවාහ දෝෂ පිළිබඳ නිවැරදි විශ්ලේෂණය.',
+'Auspicious Times for Home and Business Related Events':'ඉදිකිරීම්, ගෙවදීම, මුල්ගල් තැබීම සහ වෙනත් නිවාස හෝ ව්‍යාපාරික සුබ කටයුතු සඳහා නැකත්.',
+'General Auspicious Times':'අකුරු කියවීම, කන් විදීම, පළමු හිසකෙස් කැපීම සහ වෙනත් සුබ කටයුතු සඳහා නැකත්.',
+'Auspicious Letters for the Child':'දරුවාගේ ජන්ම පත්‍රය අනුව නම තැබීමට සුබ අකුරු.',
+'Auspicious Letters for the Business':'ව්‍යාපාර හිමිකරුගේ ජන්ම පත්‍රය අනුව ව්‍යාපාර නාමයට සුබ අකුරු.',
+'Puberty Auspicious Times':'මල්වර වූ දිනය, වේලාව සහ ස්ථානය අනුව දියණියගේ මල්වර උත්සවයට සුබ වේලාව.',
+'Wedding Auspicious Times':'සාම්ප්‍රදායික විවාහ උත්සවයක් සඳහා අවශ්‍ය සියලුම සුබ නැකත්.'
+};
 function langSi(){return localStorage.getItem('hirusaraLang')==='si'}
 function serviceName(s){return langSi() && siServiceNames[s.name] ? siServiceNames[s.name] : s.name}
 function serviceDesc(s){return langSi() && siServiceDescs[s.name] ? siServiceDescs[s.name] : s.desc}
@@ -47,7 +53,7 @@ function bookingPage(){const c=getCurrency();return c==='usd'?'booking-internati
 function renderServices(){
   const grid=document.querySelector('[data-services]'); if(!grid)return;
   const cur=getCurrency(); const booking=bookingPage(); const services=getServices();
-  grid.innerHTML=services.map((s,i)=>`<a class="service ${s.price===null?'best':''}" href="${booking}?service=${i}">${s.price===null?'<span class="badge">Best Value • Save up to 20%</span>':''}<div class="service-icon">${s.icon}</div><h3>${i+1}. ${serviceName(s)}</h3><p class="muted">${serviceDesc(s)}</p><div class="service-meta"><span>3-7 days</span><strong class="price">${money(s.price,cur)}</strong></div></a>`).join('')
+  grid.innerHTML=services.map((s,i)=>`<a class="service" href="${booking}?service=${i}"><div class="service-icon">${s.icon}</div><h3>${i+1}. ${serviceName(s)}</h3><p class="muted">${serviceDesc(s)}</p><div class="service-meta"><span>3-7 days</span><strong class="price">${money(s.price,cur)}</strong></div></a>`).join('')
 }
 function initBooking(){
  const select=document.querySelector('#service'); if(!select)return; const cur=getCurrency(); const services=getServices();
@@ -120,7 +126,7 @@ function renderAccountMenu(holder){
  const logged=sessionStorage.getItem('hirusaraAdmin')==='1';
  if(logged){menu.innerHTML=`<a href="admin.html">Account</a><button type="button" data-admin-logout>Logout</button>`;}
  else{menu.innerHTML=`<a href="admin.html">Login</a>`;}
- menu.querySelector('[data-admin-logout]')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');renderAllAccountMenus();showToast('Logged out.');});
+ menu.querySelector('[data-admin-logout]')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');location.reload();});
 }
 function renderAllAccountMenus(){document.querySelectorAll('.account-control').forEach(renderAccountMenu)}
 function ensureLangControl(nav){
@@ -133,7 +139,7 @@ function ensureLangControl(nav){
  holder.querySelectorAll('[data-lang-choice]').forEach(choice=>choice.addEventListener('click',()=>{
    const lang=choice.dataset.langChoice;
    if(lang==='si'){
-     localStorage.setItem('hirusaraLang','si'); document.documentElement.lang='si'; btn.textContent='SI'; renderServices(); initBooking(); applySinhalaTranslation();
+     localStorage.setItem('hirusaraLang','si'); document.documentElement.lang='si'; btn.textContent='සි'; renderServices(); initBooking(); applySinhalaTranslation();
    }else{
      localStorage.removeItem('hirusaraLang'); location.reload();
    }
@@ -168,7 +174,7 @@ function initMobileNav(){
        ${countryLinks}
        <div class="mobile-title">Language</div>
        <button type="button" class="mobile-menu-row mobile-lang-choice" data-lang-choice="en"><span class="mobile-social-icon">EN</span><span>English</span></button>
-       <button type="button" class="mobile-menu-row mobile-lang-choice" data-lang-choice="si"><span class="mobile-social-icon">SI</span><span>සිංහල</span></button>
+       <button type="button" class="mobile-menu-row mobile-lang-choice" data-lang-choice="si"><span class="mobile-social-icon">සි</span><span>සිංහල</span></button>
        <div class="mobile-title">Social Media</div>
        <a href="https://wa.me/447493157312" target="_blank"><span class="mobile-social-icon whatsapp-menu-icon">${makeWhatsAppIcon()}</span><span>WhatsApp</span></a>
        <a href="https://www.facebook.com/profile.php?id=61591588433698" target="_blank"><span class="mobile-social-icon">f</span><span>Facebook</span></a>
@@ -193,7 +199,7 @@ function initMobileNav(){
  }
 }
 const siMap={
- 'HOME':'මුල් පිටුව','ABOUT':'අපි ගැන','SERVICES':'සේවාවන්','BOOK NOW':'වෙන්කරන්න','Unlock Your Future':'ඔබේ අනාගතය විවෘත කරන්න','View Services':'සේවාවන් බලන්න','Ancient wisdom • Modern guidance':'පුරාණ දැනුම • නව මගපෙන්වීම','Guiding you towards a brighter tomorrow.':'ඔබව දීප්තිමත් හෙටක් වෙත මඟ පෙන්වීම.','Hirusara Astrology & Consultancy provides personalised horoscope creation, numerology and cultural astrology readings with care, confidentiality and tradition.':'හිරුසර ජ්‍යෝතිෂ්‍ය සේවය විශ්වාසය, රහස්‍යභාවය සහ සම්ප්‍රදාය සමග පුද්ගලික කේන්දර, අංක විද්‍යා හා සංස්කෘතික කියවීම් ලබා දෙයි.','About the Astrologer':'ජ්‍යෝතිෂ්‍යවේදී ගැන','Ranjith Wickramasinghe':'රංජිත් වික්‍රමසිංහ','Ranjith Wickramasinghe is an experienced and educated astrologer specialising in horoscope creation, numerology and traditional Sri Lankan cultural readings.':'රංජිත් වික්‍රමසිංහ මහතා කේන්දර සැකසීම, අංක විද්‍යාව සහ ශ්‍රී ලාංකීය සම්ප්‍රදායික ජ්‍යෝතිෂ්‍ය කියවීම් පිළිබඳ අත්දැකීම් සහිත දැනුවත් ජ්‍යෝතිෂ්‍යවේදියෙකි.','He is also a Justice of the Peace and a retired principal, bringing professionalism, discretion and trusted guidance to every consultation.':'ඔහු සාමදාන විනිශ්චයකාරවරයෙකු සහ විශ්‍රාමික විදුහල්පතිවරයෙකු ද වන අතර, සෑම උපදේශනයකටම වෘත්තීයභාවය, රහස්‍යභාවය සහ විශ්වාසනීය මගපෙන්වීම ලබා දෙයි.','Our Services':'සේවාවන්','Astrology Services We Provide':'අපි ලබාදෙන ජ්‍යෝතිෂ්‍ය සේවාවන්','Each service is prepared with care using your personal details, birth information and consultation request.':'ඔබගේ පුද්ගලික තොරතුරු, උපන් තොරතුරු සහ විමසීම අනුව සෑම සේවාවක්ම සැලකිල්ලෙන් සකස් කරනු ලැබේ.','Book Your Consultation':'ඔබේ උපදේශනය වෙන්කරන්න','Service':'සේවාව','Full Name':'සම්පූර්ණ නම','Email Address':'ඊමේල් ලිපිනය','Date of Birth':'උපන් දිනය','Birth Time':'උපන් වේලාව','Birth Place':'උපන් ස්ථානය','Questions or Notes':'ප්‍රශ්න හෝ සටහන්','Bank Details':'බැංකු විස්තර','I Have Paid':'ගෙවීම කළා','Subtotal':'උප එකතුව','Savings':'ඉතිරිය','Total Amount':'මුළු මුදල'};
+ 'HOME':'මුල් පිටුව','ABOUT':'අපි ගැන','SERVICES':'සේවාවන්','BOOK NOW':'වෙන්කරන්න','Unlock Your Future':'ඔබේ අනාගතය විවෘත කරන්න','View Services':'සේවාවන් බලන්න','Ancient wisdom • Modern guidance':'පුරාණ දැනුම • නව මගපෙන්වීම','Guiding you towards a brighter tomorrow.':'ඔබව දීප්තිමත් හෙටක් වෙත මඟ පෙන්වීම.','Hirusara Astrology & Consultancy provides personalised horoscope creation, numerology and cultural astrology readings with care, confidentiality and tradition.':'හිරුසර ජ්‍යෝතිෂ්‍ය සේවය විශ්වාසය, රහස්‍යභාවය සහ සම්ප්‍රදාය සමග පුද්ගලික කේන්දර, අංක විද්‍යා හා සංස්කෘතික කියවීම් ලබා දෙයි.','About the Astrologer':'ජ්‍යෝතිෂ්‍යවේදී ගැන','Ranjith Wickramasinghe':'රංජිත් වික්‍රමසිංහ','Ranjith Wickramasinghe is an experienced and educated astrologer specialising in horoscope creation, numerology and traditional Sri Lankan cultural readings.':'රංජිත් වික්‍රමසිංහ මහතා කේන්දර සැකසීම, අංක විද්‍යාව සහ ශ්‍රී ලාංකීය සම්ප්‍රදායික ජ්‍යෝතිෂ්‍ය කියවීම් පිළිබඳ අත්දැකීම් සහිත දැනුවත් ජ්‍යෝතිෂ්‍යවේදියෙකි.','He is also a Justice of the Peace and a retired principal, bringing professionalism, discretion and trusted guidance to every consultation.':'ඔහු සාමදාන විනිශ්චයකාරවරයෙකු සහ විශ්‍රාමික විදුහල්පතිවරයෙකු ද වන අතර, සෑම උපදේශනයකටම වෘත්තීයභාවය, රහස්‍යභාවය සහ විශ්වාසනීය මගපෙන්වීම ලබා දෙයි.','Our Services':'සේවාවන්','Astrology Services We Provide':'අපි ලබාදෙන ජ්‍යෝතිෂ්‍ය සේවාවන්','Your personal information is treated with strict confidentiality, and every astrological service is prepared with the utmost care and professionalism.':'පෞද්ගලික තොරතුරු පූර්ණ රහස්‍යභාවයෙන් ආරක්ෂා කරමින්, සෑම ජ්‍යෝතිෂ සේවාවක්ම ඉහළ ප්‍රමිතියකින් සහ සැලකිල්ලෙන් සකස් කරනු ලැබේ.','Astrologist':'ප්‍රවීන ජෝතිර්වේදී','Numerologist':'අංක විද්‍යාවේදී','Vastu Consultant':'වාස්තු විද්‍යාවේදී','Retired School Principal':'විශ්‍රාමික විදුහල්පති','All-island Justice of the Peace':'සමස්ත ලංකා සාම විනිසුරු','Professional Expertise':'වෘත්තීය ප්‍රවීණත්වය','Your consultation is prepared by an experienced and educated astrologer with specialist knowledge across multiple disciplines.':'පළපුරුදු හා අධ්‍යාපිත ජ්‍යෝතිෂ්‍යවේදියෙකු විසින් විවිධ ක්ෂේත්‍රයන්හි විශේෂ දැනුම සමඟ ඔබගේ උපදේශනය සකස් කරනු ලැබේ.','Privacy & Security':'රහස්‍යභාවය හා ආරක්ෂාව','Your personal information and payment details are handled securely and with complete confidentiality.':'ඔබගේ පෞද්ගලික තොරතුරු සහ ගෙවීම් විස්තර සම්පූර්ණ රහස්‍යභාවයෙන් හා ආරක්ෂිතව හැසිරවෙයි.','Prompt Delivery':'කඩිනම් සේවාව','Completed reports are normally delivered within 3–7 days by email or WhatsApp.':'සම්පූර්ණ කළ වාර්තා සාමාන්‍යයෙන් දින 3–7ක් ඇතුළත ඊමේල් හෝ WhatsApp මඟින් ලබාදේ.','Expert guidance. Secure service. Prompt delivery.':'ප්‍රවීණ මගපෙන්වීම. ආරක්ෂිත සේවාව. කඩිනම් ලබාදීම.','Experienced, qualified astrological guidance.':'පළපුරුදු හා සුදුසුකම් ලත් ජ්‍යෝතිෂ්‍ය මගපෙන්වීම.','Your details and payments remain confidential.':'ඔබගේ තොරතුරු සහ ගෙවීම් රහස්‍යව ආරක්ෂා කෙරේ.','Reports delivered in 3–7 days by email or WhatsApp.':'වාර්තා දින 3–7ක් ඇතුළත ඊමේල් හෝ WhatsApp මඟින් ලබාදේ.','BLOGS':'ලිපි','Book Your Consultation':'ඔබේ උපදේශනය වෙන්කරන්න','Service':'සේවාව','Full Name':'සම්පූර්ණ නම','Email Address':'ඊමේල් ලිපිනය','Date of Birth':'උපන් දිනය','Birth Time':'උපන් වේලාව','Birth Place':'උපන් ස්ථානය','Questions or Notes':'ප්‍රශ්න හෝ සටහන්','Bank Details':'බැංකු විස්තර','I Have Paid':'ගෙවීම කළා','Subtotal':'උප එකතුව','Savings':'ඉතිරිය','Total Amount':'මුළු මුදල'};
 function applySinhalaTranslation(){
  document.documentElement.lang='si';
  document.querySelectorAll('a,button,p,h1,h2,h3,label,span,strong,small').forEach(el=>{
@@ -287,7 +293,7 @@ function initAdmin(){
    if(btn.dataset.act==='cancel-delete'){render();return;}
    saveReviews(rows);render();
  });
- document.getElementById('logoutAdmin')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');render();});
+ document.getElementById('logoutAdmin')?.addEventListener('click',()=>{sessionStorage.removeItem('hirusaraAdmin');location.reload();});
  render();
 }
 function initPasswordToggle(){
@@ -297,5 +303,64 @@ function initPasswordToggle(){
 }
 function syncLoginVisibility(){ setLoginLinks(); renderAllAccountMenus(); }
 
-
-renderServices(); initBooking(); initMobileNav(); initReviews(); initAdmin(); initPasswordToggle(); syncLoginVisibility(); translatePage(); autoGeoRoute();
+function rememberRegion(){
+ document.querySelectorAll('.choice-card').forEach(a=>a.addEventListener('click',()=>{const href=a.getAttribute('href')||'';const region=href.includes('international')?'international':'uk';localStorage.setItem('hirusaraRegion',region);}));
+ document.querySelectorAll('.country .menu a,.mobile-panel a[href="uk.html"],.mobile-panel a[href="international.html"]').forEach(a=>a.addEventListener('click',()=>{const href=a.getAttribute('href')||'';localStorage.setItem('hirusaraRegion',href.includes('international')?'international':'uk');}));
+ if(document.body.classList.contains('landing')){
+   const saved=localStorage.getItem('hirusaraRegion');
+   if(saved==='uk') location.replace('uk.html');
+   if(saved==='international') location.replace('international.html');
+ }
+}
+function getBlogs(){try{return JSON.parse(localStorage.getItem('hirusaraBlogs')||'[]')}catch(e){return []}}
+function saveBlogs(v){localStorage.setItem('hirusaraBlogs',JSON.stringify(v))}
+function renderBlogs(){
+ const list=document.getElementById('blogList'); if(!list)return;
+ const blogs=getBlogs().sort((a,b)=>new Date(b.created)-new Date(a.created));
+ if(!blogs.length){list.innerHTML='<div class="panel empty-state"><h2>No blog posts yet</h2><p class="muted">New astrology articles and guidance will appear here.</p></div>';return;}
+ const isAdmin=sessionStorage.getItem('hirusaraAdmin')==='1';
+ const fbIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07C2 17.1 5.66 21.27 10.44 22v-7.03H7.9v-2.9h2.54V9.86c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.47h-1.25c-1.23 0-1.61.77-1.61 1.56v1.88h2.74l-.44 2.9h-2.3V22C18.34 21.27 22 17.1 22 12.07z"/></svg>';
+ const trashIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-4h6l1 2h4v2H4V5h4l1-2z"/></svg>';
+ list.innerHTML=blogs.map((b,i)=>{
+   const detailUrl=`blog-post.html?id=${encodeURIComponent(b.id)}`;
+   const shareUrl=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(new URL(detailUrl,location.href).href)}`;
+   const limit=i===0?260:150;
+   const excerpt=escapeHtml(b.body.slice(0,limit))+(b.body.length>limit?'…':'');
+   return `<article class="panel blog-card ${i===0?'featured-blog':''}" data-blog-id="${b.id}">${i===0?'<span class="blog-badge">Latest Post</span>':''}${b.image?`<img class="blog-image" src="${b.image}" alt="">`:''}<a class="blog-card-link" href="${detailUrl}"><p class="eyebrow">${new Date(b.created).toLocaleDateString()}</p><h2>${escapeHtml(b.title)}</h2><p class="blog-excerpt">${excerpt}</p></a><div class="blog-icon-actions"><a class="blog-icon-btn" title="Share on Facebook" target="_blank" href="${shareUrl}">${fbIcon}</a>${isAdmin?`<button class="blog-icon-btn blog-delete-btn" title="Delete" type="button" data-public-blog-delete="${b.id}">${trashIcon}</button>`:''}</div></article>`;
+ }).join('');
+ list.onclick=async e=>{
+   const del=e.target.closest('[data-public-blog-delete]');
+   if(del){if(confirm('Delete this blog post?')){saveBlogs(getBlogs().filter(b=>b.id!==+del.dataset.publicBlogDelete));renderBlogs();}return;}
+ };
+}
+function renderSingleBlog(){
+ const box=document.getElementById('singleBlog'); if(!box)return;
+ const id=+new URLSearchParams(location.search).get('id'); const b=getBlogs().find(x=>x.id===id);
+ if(!b){box.innerHTML='<article class="panel single-blog-card"><h1>Blog post not found</h1><p class="muted">This article may have been removed.</p></article>';return;}
+ const shareUrl=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`;
+ box.innerHTML=`<article class="panel single-blog-card">${b.image?`<img class="blog-image" src="${b.image}" alt="">`:''}<p class="eyebrow">${new Date(b.created).toLocaleDateString()}</p><h1>${escapeHtml(b.title)}</h1><div class="blog-body">${escapeHtml(b.body).replace(/\n/g,'<br>')}</div><div class="blog-icon-actions"><a class="blog-icon-btn" target="_blank" title="Share on Facebook" href="${shareUrl}"><svg viewBox="0 0 24 24"><path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07C2 17.1 5.66 21.27 10.44 22v-7.03H7.9v-2.9h2.54V9.86c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.47h-1.25c-1.23 0-1.61.77-1.61 1.56v1.88h2.74l-.44 2.9h-2.3V22C18.34 21.27 22 17.1 22 12.07z"/></svg></a></div></article>`;
+}
+function escapeHtml(v){return String(v||'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[m]))}
+function initBlogComposer(){
+ const composer=document.getElementById('blogAdminComposer');
+ const form=document.getElementById('blogForm');
+ const isAdmin=sessionStorage.getItem('hirusaraAdmin')==='1';
+ if(composer) composer.hidden=!isAdmin;
+ if(!isAdmin||!form) return;
+ form.addEventListener('submit',async e=>{
+   e.preventDefault();
+   const title=document.getElementById('blogTitle').value.trim();
+   const body=document.getElementById('blogBody').value.trim();
+   const file=document.getElementById('blogImage').files[0];
+   let image='';
+   if(file) image=await fileToDataUrl(file);
+   const blogs=getBlogs();
+   blogs.push({id:Date.now(),title,body,image,created:new Date().toISOString()});
+   saveBlogs(blogs);
+   form.reset();
+   renderBlogs();
+   showToast('Blog post published.');
+ });
+}
+function fileToDataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
+renderServices(); initBooking(); initMobileNav(); initReviews(); initAdmin(); initPasswordToggle(); syncLoginVisibility(); translatePage(); autoGeoRoute(); rememberRegion(); renderBlogs(); renderSingleBlog(); initBlogComposer();
